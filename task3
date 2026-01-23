@@ -1,0 +1,23 @@
+import math
+
+a = float(input("Введіть a: "))
+b = float(input("Введіть b: "))
+c = float(input("Введіть c: "))
+
+D = b**2 - 4*a*c
+print("дискримінант D =", D)
+
+if D > 0:
+x1 = (-b + math.sqrt(D)) / (2*a)
+x2 = (-b - math.sqrt(D)) / (2*a)
+print("два корені:")
+print("x1 =", x1)
+print("x2 =", x2)
+
+elif D == 0:
+x = -b / (2*a)
+print("один корінь:")
+print("x =", x)
+
+else:
+print("дійсних коренів немає")
