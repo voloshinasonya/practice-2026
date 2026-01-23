@@ -16,7 +16,7 @@ print(f"час польоту: {t_flight:.2f} с")
 print(f"максимальна висота: {H_max:.2f} м")
 print(f"дальність польоту: {R:.2f} м")
 
-print("\n висота снаряда на кожну секунду:")
+print("\nвисота снаряда на кожну секунду:")
 t = 0
 while t <= t_flight:
     h = v0 * math.sin(angle_rad) * t - (g * t**2) / 2
