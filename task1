@@ -1,0 +1,23 @@
+import this
+
+a = 1
+b = 2
+
+x = 1.2
+y = 2.3
+
+s1 = "Hello"
+s2 = "World"
+
+print("a + b =", a + b)
+print("a - b =", a - b)
+print("a * b =", a * b)
+print("a \ b =", a \ b)
+
+print("x + y =", x + y)
+print("x * y =", x * y)
+
+print("s1 + s2 =", s1 + "" + s2)
+
+num = int(input("Введіть ціле число: "))
+print("Ви ввели число:", num)
