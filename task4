@@ -1,0 +1,26 @@
+import math
+
+v0 = float(input("введіть початкову швидкість (м/с): "))
+angle = float(input("введіть кут вильоту (у градусах): "))
+
+g = 20
+angle_rad = math.radians(angle)
+
+t_flight = 2 * v0 * math.sin(angle_rad) / g
+
+H_max = (v0**2 * math.sin(angle_rad)**2) / (2 * g)
+
+R = (v0**2 * math.sin(2 * angle_rad)) / g
+
+print(f"час польоту: {t_flight:.2f} с")
+print(f"максимальна висота: {H_max:.2f} м")
+print(f"дальність польоту: {R:.2f} м")
+
+print("\n висота снаряда на кожну секунду:")
+t = 0
+while t <= t_flight:
+    h = v0 * math.sin(angle_rad) * t - (g * t**2) / 2
+    if h < 0:
+        h = 0
+    print(f"t = {t:.0f} c  ->  h = {h:.2f} м")
+    t += 1
