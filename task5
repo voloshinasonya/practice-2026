@@ -1,0 +1,11 @@
+numbers = input("введіть числа через пробіл: ").split()
+
+arr = [float(x) for x in numbers]
+
+n = len(arr)
+for i in range(n):
+    for j in range(0, n - i - 1):
+        if arr[j] > arr[j + 1]:
+            arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+print("відсортований масив:", arr)
