@@ -1,0 +1,21 @@
+students_grades = {
+"Бабак Ангеліна": [7, 6, 8, 8],
+"Бистрицька Анна": [11, 12, 11, 10],
+"Бігун Назар": [10, 9, 8, 8]
+}
+
+average_grades = {}
+
+unique_grades = set()
+
+for name, grades in students_grades.items():
+avg = sum(grades)/len(grades)
+average_grades[name] = avg
+
+unique_grades.update(grades)
+
+print("середні бали студентів:")
+for name, avg in average_grades.items():
+print(f"{name}: {avg:.2f}")
+
+print("\nунікальні оцінки:", unique_grades)
