@@ -1,0 +1,85 @@
+class Animal(ABC):
+def __init__(self, name):
+self.name = name
+self.__hunger = 50
+
+def sound(self):
+pass
+
+def food(self):
+pass
+
+def eat(self):
+self.__hunger = max(0, self.__hunger - 20)
+print(f"{self.name} поїв. рівень голоду: {self.__hunger}")
+
+def get_hunger(self):
+return self.__hunger
+
+
+
+class Lion(Animal):
+def sound(self):
+print(f"{self.name}: рррр")
+
+def food(self):
+return "м'ясо"
+
+
+class Elephant(Animal):
+def sound(self):
+print(f"{self.name}: труу")
+
+def food(self):
+return "трава"
+
+
+class Monkey(Animal):
+def sound(self):
+print(f"{self.name}: ууаа")
+
+def food(self):
+return "фрукти"
+
+
+class Keeper:
+def __init__(self, name):
+self.name = name
+
+def feed(self, animal: Animal):
+print(f"{self.name} годує {animal.name} ({animal.food()})")
+animal.eat()
+
+
+class Zoo:
+def __init__(self):
+self.animals = []
+
+def add_animal(self, animal: Animal):
+self.animals.append(animal)
+
+def make_sounds(self):
+for animal in self.animals:
+animal.sound()
+
+
+zoo = Zoo()
+
+lion = Lion("Сімба")
+elephant = Elephant("Дамбо")
+monkey = Monkey("Чіко")
+
+keeper = Keeper("Соня")
+
+
+zoo.add_animal(lion)
+zoo.add_animal(elephant)
+zoo.add_animal(monkey)
+
+zoo.make_sounds()
+
+print()
+
+
+for animal in zoo.animals:
+    keeper.feed(animal)
