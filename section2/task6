@@ -1,0 +1,24 @@
+class Animal:
+def sound(self):
+print("тварина видає звук")
+
+
+class Dog(Animal):
+def sound(self):
+print("собака каже: гав")
+
+
+class Cat(Animal):
+def sound(self):
+print("кіт каже: мяу")
+
+
+class Cow(Animal):
+def sound(self):
+print("корова каже: муу")
+
+
+animals = [Dog(), Cat(), Cow()]
+
+for animal in animals:
+animal.sound()
