@@ -1,0 +1,26 @@
+class Animal:
+def sound(self):
+print("тварина видає звук")
+
+
+class Dog(Animal):
+def sound(self):
+print("собака каже: гав")
+
+
+class Cat(Animal):
+def sound(self):
+print("кіт каже: мяу")
+
+
+class Cow(Animal):
+def sound(self):
+print("корова каже: муу")
+
+
+animals = [Dog(), Cat(), Cow()]
+
+for animal in animals:
+animal.sound()
+
+# пізне зв'язування відбувається під час виконання завдання, а не під час компіляції. Python динамічно визначає який саме звук потрібно викликати, та шукає його для виконання методу
