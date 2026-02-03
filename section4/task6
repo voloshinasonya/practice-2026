@@ -1,0 +1,68 @@
+from flask import Flask
+import psycopg2
+import os
+
+app = Flask(__name__)
+
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("POSTGRES_DB")
+DB_USER = os.getenv("POSTGRES_USER")
+DB_PASS = os.getenv("POSTGRES_PASSWORD")
+
+@app.route("/")
+def index():
+try:
+conn = psycopg2.connect(
+host=DB_HOST,
+database=DB_NAME,
+user=DB_USER,
+password=DB_PASS
+)
+return "з'єднання з PostgreSQL успішне!"
+except Exception as e:
+return f"помилка з'єднання: {e}"
+
+if __name__ == "__main__":
+app.run(host="0.0.0.0", port=5000)
+
+FROM python:3.11-slim
+
+WORKDIR/app
+
+COPY app/requirements.txt .
+RUN pip install -no-cache-dir-r requirements.txt
+
+COPY app/
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
+
+version: "3.9"
+
+services:
+web:
+build: 
+ports:
+- "5000:5000"
+environment:
+DB_HOST: db
+POSTGRES_DB: testdb
+POSTGRES_USER: admin
+POSTGRES_PASSWORD: admin123
+depends_on:
+- db
+
+db:
+image: postgres:15
+environment:
+POSTGRES_DB: testdb
+POSTGRES_USER: admin
+POSTGRES_PASSWORD: admin123
+volumes:
+- postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+  
