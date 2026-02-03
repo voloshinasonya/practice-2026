@@ -1,0 +1,25 @@
+import requests
+
+get_url = "https://httpbin.org/get"
+
+get_response = requests.get(get_url)
+
+print("GET-запит")
+print("сстатус-код:", get_response.status_code)
+print("заголовки:", get_response.headers)
+print("тіло відповіді:", get_response.text)
+
+print("\n" + "-" * 50 + "\n")
+
+post_url = "https://httpbin.org/post"
+data = {
+"name": "Sonya",
+"age":17
+}
+
+post_response = requests.post(post_url, data=data)
+
+print("POST-запит")
+print("статус-код:", post_response.status_code)
+print("заголовки:", post_response.headers)
+print("тіло відповіді:", post_response.text)
