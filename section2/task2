@@ -1,23 +1,20 @@
-class student:
-def __init__(self, name, group, average_grade):
-self.name = name
-self.group = group
-self.average_grade = average_grade
+class Student:
+    def __init__(self, name, group, average_grade):
+        self.name = name
+        self.group = group
+        self.average_grade = average_grade
 
-def show_info(self):
-print("ім'я:", self.name)
-print("група:", self.group)
-print("середній бал:", self.average_grade)
-print("-" * 30)
+    def show_info(self):
+        print("Ім'я:", self.name)
+        print("Група:", self.group)
+        print("Середній бал:", self.average_grade)
+        print("-" * 30)
 
-student1 = student("Бабак Ангеліна", "ІПЗ-32", 8)
-student2 = student("Бистрицька Анна", "ІПЗ-32", 11)
-student3 = student("Бігун Назар", "ІПЗ-32", 9)
-student4 = student("Волошина Софія", "ІПЗ-32", 8)
-student5 = student("Гунько Артем", "ІПЗ-32", 7)
+
+student1 = Student("Софія Волошина", "ІПЗ-32", 8.0)
+student2 = Student("Владислава Макада", "ІПЗ-32", 11.0)
+student3 = Student("Дмитро Ісай", "ІПЗ-32", 11.0)
 
 student1.show_info()
 student2.show_info()
 student3.show_info()
-student4.show_info()
-student5.show_info()
