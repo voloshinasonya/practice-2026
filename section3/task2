@@ -1,17 +1,17 @@
 import tkinter as tk
 
 def greet():
-label.config(text="Вітаю, користувач!")
+    label.config(text="Вітаю, користувач!")
 
 def clear_text():
-label.config(text="")
+    label.config(text="")
 
 def exit_program():
-root.destroy()
+    root.destroy()
 
 root = tk.Tk()
 root.title("Програма з кнопками")
-root.geometry("400x200")
+root.geometry("400x200") 
 
 label = tk.Label(root, text="", font=("Arial", 16))
 label.pack(pady=20)
