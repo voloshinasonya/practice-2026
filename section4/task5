@@ -2,98 +2,99 @@ from flask import Flask, request, jsonify
 import bcrypt
 import jwt
 import datetime
-from functoools import wraps
+from functools import wraps
 
 app = Flask(__name__)
-app.config ["SECRET_KEY"] = "super_secret_key"
+app.config["SECRET_KEY"] = "super_secret_key"  # у реальних проєктах — через .env
 
 users = {}
 
 def token_required(f):
-@wraps(f)
-def decorated(*args, **kwargs):
-token = None
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
 
-if "Authorization" in request.headers:
-token = request.headers["Authorization"].replace("Bearer ", "")
+        if "Authorization" in request.headers:
+            token = request.headers["Authorization"].replace("Bearer ", "")
 
-if not token:
-return jsonify({
-"status": "error",
-"message": "токен відсутній"
-}), 401
+        if not token:
+            return jsonify({
+                "status": "error",
+                "message": "Токен відсутній"
+            }), 401
 
-try:
-data = jwt.decode(
-token,
-app.config["SECRET_KEY"],
-algorithms=["HS256"]
-)
-current_user = data["username"]
-except  jwt.ExpiredSignatureError:
-return jsonify({"status": "error", "message": "токен прострочений"}), 401
-except jwt.InvalidTokenError:
-return jsonify({"status": "error", "message": "невалідний токен"}), 401
+        try:
+            data = jwt.decode(
+                token,
+                app.config["SECRET_KEY"],
+                algorithms=["HS256"]
+            )
+            current_user = data["username"]
+        except jwt.ExpiredSignatureError:
+            return jsonify({"status": "error", "message": "Токен прострочений"}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({"status": "error", "message": "Невалідний токен"}), 401
 
-return f(current_user, *args, **kwargs)
+        return f(current_user, *args, **kwargs)
 
-return decorated
+    return decorated
 
 @app.route("/register", methods=["POST"])
 def register():
-data = request.json
-username = data["username"]
-password = data["password"]
+    data = request.json
+    username = data["username"]
+    password = data["password"]
 
-if username in users:
-return jsonify({"status": "error", "message": "користувач існує"}), 400
+    if username in users:
+        return jsonify({"status": "error", "message": "Користувач існує"}), 400
 
-hashed_password = bcrypt.hashpw(
-password.encode(),
-bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(
+        password.encode(),
+        bcrypt.gensalt()
+    )
 
-users[username] = hashed_password
+    users[username] = hashed_password
 
-return jsonify({
-"status": "success",
-"message": "користувача зареєстровано"
-})
+    return jsonify({
+        "status": "success",
+        "message": "Користувача зареєстровано"
+    })
 
 @app.route("/login", methods=["POST"])
 def login():
-data = request.json
-username = data["username"]
-password = data["password"]
+    data = request.json
+    username = data["username"]
+    password = data["password"]
 
-if username not in users:
-return jsonify({"status": "error", "message": "Невірні дані"}), 401
+    if username not in users:
+        return jsonify({"status": "error", "message": "Невірні дані"}), 401
 
-if not bcrypt.checkpw(password.encode(), users[username]):
-return jsonify({"status": "error", "message": "невірні дані"}), 401
+    if not bcrypt.checkpw(password.encode(), users[username]):
+        return jsonify({"status": "error", "message": "Невірні дані"}), 401
 
-token = jwt.encode(
-{
-"username": username,
-"exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
-},
-app.config["SECRET_KEY"],
-algorithm="HS256"
-)
+    token = jwt.encode(
+        {
+            "username": username,
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
+        },
+        app.config["SECRET_KEY"],
+        algorithm="HS256"
+    )
 
-return jsonify({
-"status": "success",
-"token": token
-})
+    return jsonify({
+        "status": "success",
+        "token": token
+    })
 
 @app.route("/profile", methods=["GET"])
 @token_required
 def profile(current_user):
-return jsonify({
-"status": "success",
-"data": {
-"username": current_user
-}
-})
+    return jsonify({
+        "status": "success",
+        "data": {
+            "username": current_user
+        }
+    })
 
 if __name__ == "__main__":
-app.run(debug=True)
+    app.run(debug=True)
