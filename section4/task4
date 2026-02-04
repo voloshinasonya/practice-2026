@@ -1,25 +1,25 @@
-from cryptography.hazmat.primitives import hashes, seralization
-from cryptography.hazmat.primitives.asymmetric import rsa,padding
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding as sym_padding
-from cryptography.hazmat.backends  import default_backend
+from cryptography.hazmat.backends import default_backend
 import os
 
-message = "hello, cryptography!"
+message = "Hello, cryptography!"
 message_bytes = message.encode()
 
-print("оригінальне повідомлення:", message)
+print("Оригінальне повідомлення:", message)
 
-digest = hashes.Hash (hashes.SHA256())
-digest.update (message_bytes)
+digest = hashes.Hash(hashes.SHA256())
+digest.update(message_bytes)
 hash_value = digest.finalize()
 
 print("\nSHA-256 геш:", hash_value.hex())
 
-key = os.urandom(32)
+key = os.urandom(32)  # 256-бітний ключ
 iv = os.urandom(16)
 
-cipher = Cipher(algorithms.AES(key), modes.CBC(iv),  backend=default_backend()
+cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
 encryptor = cipher.encryptor()
 
 padder = sym_padding.PKCS7(128).padder()
@@ -37,32 +37,30 @@ decrypted_message = unpadder.update(decrypted_padded) + unpadder.finalize()
 print("AES розшифроване повідомлення:", decrypted_message.decode())
 
 private_key = rsa.generate_private_key(
-public_exponent=65537,
-key_size=2048
+    public_exponent=65537,
+    key_size=2048
 )
 public_key = private_key.public_key()
 
 signature = private_key.sign(
-message_bytes,
-padding.PSS(
-mgf=padding.MGF1(hashes.SHA256()),
-salt_length=padding.PSS.MAX_LENGTH
-)
-hashes.SHA256()
+    message_bytes,
+    padding.PSS(
+        mgf=padding.MGF1(hashes.SHA256()),
+        salt_length=padding.PSS.MAX_LENGTH
+    ),
+    hashes.SHA256()
 )
 
 print("\nЦифровий підпис створено")
 
 public_key.verify(
-signature,
-message_bytes,
-padding.PSS(
-mgf=padding.MGF1(hashes.SHA256()),
-salt_length=padding.PSS.MAX_LENGTH
-)
-hashes.SHA256()
+    signature,
+    message_bytes,
+    padding.PSS(
+        mgf=padding.MGF1(hashes.SHA256()),
+        salt_length=padding.PSS.MAX_LENGTH
+    ),
+    hashes.SHA256()
 )
 
-print("підпис успішно перевірено")
-
-#різниця між гешуванням і шифруванням: гешування використовується для перевірки цілісності, цифрових підписів, зберігання паролів, а шифрування використовується для захисту даних та передачі повідомлень.
+print("Підпис успішно перевірено")
