@@ -2,10 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 
 def save_info():
-name = name_entry.get()
-gender = gender_var.get()
-agree = "так" if agree_var.get() else "ні"
-info_label.config(text=f"Ім'я: {name}\nСтать: {gender}\nПогодження: {agree}")
+    name = name_entry.get()
+    gender = gender_var.get()
+    agree = "Так" if agree_var.get() else "Ні"
+    info_label.config(text=f"Ім'я: {name}\nСтать: {gender}\nПогодження: {agree}")
 
 root = tk.Tk()
 root.title("Анкета користувача")
