@@ -6,60 +6,60 @@ import os
 CONFIG_FILE = "config.json"
 
 def choose_color():
-color = colorchooser.askcolor()[1]
-if color:
-root.config(bg=color)
-maiin_frame.config(bg=color)
-save_config(color)
+    color = colorchooser.askcolor()[1]
+    if color:
+        root.config(bg=color)
+        main_frame.config(bg=color)
+        save_config(color)
 
 def save_config(color):
-with open(CONFIG_FILE,"w") as f:
-json.dump({"bg_color": color}, f)
+    with open(CONFIG_FILE, "w") as f:
+        json.dump({"bg_color": color}, f)
 
 def load_config():
-if os.path.exists(CONFIG_FILE):
-with open(CONFIG_FILE, "r") as f:
-data = json.load(f)
-return data.get("bg_color")
-return None
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            data = json.load(f)
+            return data.get("bg_color")
+    return None
 
 root = tk.Tk()
-root.title("програма з вкладками")
+root.title("Програма з вкладками")
 root.geometry("500x400")
 
-notebook =  ttk.Notebook(root)
+notebook = ttk.Notebook(root)
 notebook.pack(expand=True, fill="both")
 
 main_frame = tk.Frame(notebook)
-notebook.add(main_frame, text="головна")
+notebook.add(main_frame, text="Головна")
 
-tk.Label(main_frame, text="ім'я:").grid(row=0, column=0, padx=10, pady=10, sticky="e")
+tk.Label(main_frame, text="Ім'я:").grid(row=0, column=0, padx=10, pady=10, sticky="e")
 name_entry = tk.Entry(main_frame)
 name_entry.grid(row=0, column=1, padx=10, pady=10)
 
-tk.Label(main_frame, text="вік:").grid(row=1, column=0, padx=10, pady=10, sticky="e")
+tk.Label(main_frame, text="Вік:").grid(row=1, column=0, padx=10, pady=10, sticky="e")
 age_entry = tk.Entry(main_frame)
-age_entry.grid(row=1,  column=1, padx=10, pady=10)
+age_entry.grid(row=1, column=1, padx=10, pady=10)
 
-tk.Label(main_frame, text="інформація:").grid(row=2, column=0, padx=10, pady=10, sticky="ne")
+tk.Label(main_frame, text="Інформація:").grid(row=2, column=0, padx=10, pady=10, sticky="ne")
 info_text = tk.Text(main_frame, width=30, height=5)
 info_text.grid(row=2, column=1, padx=10, pady=10)
 
 settings_frame = tk.Frame(notebook)
-notebook.add(settings_frame, text="налаштування")
+notebook.add(settings_frame, text="Налаштування")
 
-tk.Label(settings_frame, text="виберіть колір фону:").pack(pady=20)
-tk.Button(settings_frame,text="обрати колір", command=choose_color).pack()
+tk.Label(settings_frame, text="Виберіть колір фону:").pack(pady=20)
+tk.Button(settings_frame, text="Обрати колір", command=choose_color).pack()
 
 about_frame = tk.Frame(notebook)
-notebook.add(about_frame, text="про програму")
+notebook.add(about_frame, text="Про програму")
 
 tk.Label(about_frame, text="Автор: Волошина Соня", font=("Arial", 14)).pack(pady=50)
-tk.Label(about_frame, text="програма демонструє роботу вкладок у Tkinter").pack(pady=10)
+tk.Label(about_frame, text="Програма демонструє роботу вкладок у Tkinter").pack(pady=10)
 
 saved_color = load_config()
 if saved_color:
-root.config(bg=saved_color)
-main_frame.config(bg=saved_color)
+    root.config(bg=saved_color)
+    main_frame.config(bg=saved_color)
 
 root.mainloop()
