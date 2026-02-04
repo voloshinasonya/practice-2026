@@ -2,94 +2,92 @@ from flask import Flask, request, jsonify
 import json
 import os
 
-app = Flask(name)
+app = Flask(__name__)
 DATA_FILE = "users.json"
 
 
 def load_users():
-if not os.path.exists(DATA_FILE):
-return []
-with open(DATA_FILE, "r", encoding="utf-8") as f:
-return json.load(f)
+    if not os.path.exists(DATA_FILE):
+        return []
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 def save_users(users):
-with open(DATA_FILE, "w", encoding="utf-8") as f:
-json.dump(users, f, ensure_ascii=False, indent=2)
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(users, f, ensure_ascii=False, indent=2)
 
 
 def response(status, data=None, message=""):
-return jsonify({
-"status": status,
-"data": data,
-"message": message
-})
+    return jsonify({
+        "status": status,
+        "data": data,
+        "message": message
+    })
 
 
 @app.route("/users", methods=["GET"])
 def get_users():
-users = load_users()
-return response("success", users, "список користувачів")
+    users = load_users()
+    return response("success", users, "Список користувачів")
 
 
 @app.route("/users", methods=["POST"])
 def create_user():
-users = load_users()
-data = request.json
+    users = load_users()
+    data = request.json
 
-if not data or "name" not in data:
-return response("error", None, "неккоректні дані"), 400
+    if not data or "name" not in data:
+        return response("error", None, "Некоректні дані"), 400
 
-new_id = users[-1]["id"] + 1 if users else 1
-user = {
-"id": new_id,
-"name": data["name"]
-}
+    new_id = users[-1]["id"] + 1 if users else 1
+    user = {
+        "id": new_id,
+        "name": data["name"]
+    }
 
-users.append(user)
-save_users(users)
+    users.append(user)
+    save_users(users)
 
-return response("success", user, "користувача створено"), 201
+    return response("success", user, "Користувача створено"), 201
 
 
 @app.route("/users/<int:user_id>", methods=["GET"])
 def get_user(user_id):
-users = load_users()
-user = next((u for u in users if u["id"] == user_id), None)
+    users = load_users()
+    user = next((u for u in users if u["id"] == user_id), None)
 
-if not user:
-return response("error", None,"користувача не знайдено"), 404
+    if not user:
+        return response("error", None, "Користувача не знайдено"), 404
 
-return response("success", user, "користувача знайдено")
+    return response("success", user, "Користувача знайдено")
 
 
-@app.route("/users/<int:user_id>",  methods=["PUT"])
+@app.route("/users/<int:user_id>", methods=["PUT"])
 def update_user(user_id):
-users = load_users()
-data = request.json
+    users = load_users()
+    data = request.json
 
-for user in users:
-if user["id"] == user_id:
-user["name"] = data.get("name", user["name"])
-save_users(users)
-return response("success", user, "користувача оновлено")
+    for user in users:
+        if user["id"] == user_id:
+            user["name"] = data.get("name", user["name"])
+            save_users(users)
+            return response("success", user, "Користувача оновлено")
 
-return response("error", None, "користувача не знайдено"), 404
+    return response("error", None, "Користувача не знайдено"), 404
 
 
 @app.route("/users/<int:user_id>", methods=["DELETE"])
 def delete_user(user_id):
-users = load_users()
-new_users = [u for u in users if u["id"] != user_id]
+    users = load_users()
+    new_users = [u for u in users if u["id"] != user_id]
 
-if len(new_users) == len(users):
-return response("error", None, "користувача не знайдено"), 404
+    if len(new_users) == len(users):
+        return response("error", None, "Користувача не знайдено"), 404
 
-save_users(new_users)
-return response("success", None, "користувача видалено")
+    save_users(new_users)
+    return response("success", None, "Користувача видалено")
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
