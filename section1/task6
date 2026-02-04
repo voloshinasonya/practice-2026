@@ -1,0 +1,12 @@
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+
+number = int(input("Введіть ціле число: "))
+
+if number < 0:
+    print("Факторіал визначений лише для невід’ємних чисел.")
+else:
+    print(f"Факторіал числа {number} = {factorial(number)}")
