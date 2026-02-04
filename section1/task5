@@ -1,4 +1,4 @@
-numbers = input("введіть числа через пробіл: ").split()
+numbers = input("Введіть числа через пробіл: ").split()
 
 arr = [float(x) for x in numbers]
 
@@ -8,4 +8,4 @@ for i in range(n):
         if arr[j] > arr[j + 1]:
             arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
-print("відсортований масив:", arr)
+print("Відсортований масив:", arr)
