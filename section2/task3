@@ -1,7 +1,7 @@
 students_grades = {
-"Бабак Ангеліна": [7, 6, 8, 8],
-"Бистрицька Анна": [11, 12, 11, 10],
-"Бігун Назар": [10, 9, 8, 8]
+    "Софія Волошина": [9, 8, 7, 8],
+    "Владислава Макада": [12, 11, 10, 10],
+    "Дмитро Ісай": [11, 10, 12, 11]
 }
 
 average_grades = {}
@@ -9,13 +9,15 @@ average_grades = {}
 unique_grades = set()
 
 for name, grades in students_grades.items():
-avg = sum(grades)/len(grades)
-average_grades[name] = avg
+    # list → середній бал
+    avg = sum(grades) / len(grades)
+    average_grades[name] = avg
 
-unique_grades.update(grades)
+    # set → унікальні оцінки
+    unique_grades.update(grades)
 
-print("середні бали студентів:")
+print("Середні бали студентів:")
 for name, avg in average_grades.items():
-print(f"{name}: {avg:.2f}")
+    print(f"{name}: {avg:.2f}")
 
-print("\nунікальні оцінки:", unique_grades)
+print("\nУнікальні оцінки:", unique_grades)
