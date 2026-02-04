@@ -1,11 +1,11 @@
-df = read_csv("students.csv")
+df = pd.read_csv("students.csv")
 
-df["avg_student"] = df[["grade1", "grade2", "grade3"]].mean(axis=1)
+df["avg_student"] = df[["grade1", "grade2", "grade3", "grade4", "grade5"]].mean(axis=1)
 
-print("таблиця середніх балів студентів:")
+print("Таблиця середніх балів студентів:")
 print(df[["name", "surname", "avg_student"]])
 
-discipline_avg = df[["grade1", "grade2", "grade3"]].mean()
+discipline_avg = df[["grade1", "grade2", "grade3", "grade4", "grade5"]].mean()
 
-print("\nсередній бал по кожному предмету:")
+print("\nСередній бал групи по кожній дисципліні:")
 print(discipline_avg)
