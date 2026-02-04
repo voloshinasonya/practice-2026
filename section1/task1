@@ -1,23 +1,23 @@
 import this
 
-a = 1
-b = 2
+a = 12
+b = 5
 
-x = 1.2
-y = 2.3
+x = 3.5
+y = 2.0
 
 s1 = "Hello"
-s2 = "World"
+s2 = "Python"
 
 print("a + b =", a + b)
 print("a - b =", a - b)
 print("a * b =", a * b)
-print("a \ b =", a \ b)
+print("a / b =", a / b)
 
 print("x + y =", x + y)
 print("x * y =", x * y)
 
-print("s1 + s2 =", s1 + "" + s2)
+print("Результат конкатенації:", s1 + " " + s2)
 
 num = int(input("Введіть ціле число: "))
 print("Ви ввели число:", num)
